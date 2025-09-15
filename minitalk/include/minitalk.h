@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/07 10:10:48 by fsousa            #+#    #+#             */
-/*   Updated: 2025/08/07 15:09:59 by fsousa           ###   ########.fr       */
+/*   Created: 2025/09/08 12:03:59 by fsousa            #+#    #+#             */
+/*   Updated: 2025/09/14 10:56:30 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#ifndef MINITALK_H
+# define MINITALK_H
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	counter;
+# include <signal.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-	counter = 0;
-	while (s[counter])
-		counter++;
-	return (counter);
-}
+void	ft_putnbr(int nb);
+void	ft_putchar(char c);
+int		ft_atoi(char *str);
+
+typedef struct s_data {
+	unsigned char	c;
+	int				bit;
+
+}	t_data;
+
+#endif

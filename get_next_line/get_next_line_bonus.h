@@ -6,7 +6,7 @@
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 09:08:38 by fsousa            #+#    #+#             */
-/*   Updated: 2025/08/26 09:09:23 by fsousa           ###   ########.fr       */
+/*   Updated: 2025/09/01 14:59:00 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif // !BUFFER_SIZE
 
 # ifndef MAX_FD
-#  define MAX_FD 1024
+#  define MAX_FD 1024 
 # endif // !MAX_FD
 
 # include <stdlib.h>
