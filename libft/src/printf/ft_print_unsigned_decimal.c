@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_print_unsigned_decimal.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 14:51:10 by fsousa            #+#    #+#             */
-/*   Updated: 2025/07/31 11:27:49 by fsousa           ###   ########.fr       */
+/*   Created: 2025/08/07 13:30:32 by fsousa            #+#    #+#             */
+/*   Updated: 2025/09/27 10:42:21 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int	ft_print_unsigned_decimal(va_list args)
 {
-	void	*ptr;
+	unsigned int	unsigned_decimal;
+	int				counter;
 
-	if (nmemb == 0 || size == 0)
-		return (malloc(1));
-	if (size && nmemb > (size_t)-1 / size)
-		return (NULL);
-	ptr = malloc(nmemb * size);
-	if (!ptr)
-		return (NULL);
-	ft_bzero(ptr, nmemb * size);
-	return (ptr);
+	unsigned_decimal = va_arg(args, unsigned int);
+	counter = ft_putunsigned(unsigned_decimal);
+	return (counter);
 }

@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_print_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 14:26:11 by fsousa            #+#    #+#             */
-/*   Updated: 2025/07/27 16:35:51 by fsousa           ###   ########.fr       */
+/*   Created: 2025/08/07 10:06:18 by fsousa            #+#    #+#             */
+/*   Updated: 2025/09/27 10:41:48 by fsousa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_print_string(va_list args)
 {
-	size_t	s1len;
-	size_t	s2len;
-	size_t	concatlen;
-	char	*ptr;
+	char		*str;
+	size_t		len;
 
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	concatlen = s1len + s2len;
-	ptr = malloc(concatlen + 1);
-	if (!ptr)
-		return (NULL);
-	ft_strlcpy(ptr, s1, s1len + 1);
-	ft_strlcat(ptr, s2, concatlen + 1);
-	return (ptr);
+	str = va_arg(args, char *);
+	if (!str)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	len = ft_strlen(str);
+	write(1, str, len);
+	return ((int)len);
 }

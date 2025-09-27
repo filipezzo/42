@@ -1,11 +1,29 @@
-NAME = libft.a
-AR = ar -rcs
-RM = rm -f
-CC = cc
-CCFLAGS = -Wall -Wextra -Werror
-INCLUDE = -I .
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fsousa <fsousa@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/09/25 14:38:05 by fsousa            #+#    #+#              #
+#    Updated: 2025/09/27 10:41:30 by fsousa           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-PART1 = ft_isalpha.c \
+NAME := libft.a
+
+SRC_DIR := src
+OBJ_DIR := obj
+
+CC := cc
+AR := ar -rcs
+RM := rm -rf
+
+CCFLAGS := -Wall -Wextra -Werror
+DEPFLAGS := -MMD -MP
+CPPFLAGS := -I include -I src/core -I src/gnl
+
+CORE = ft_isalpha.c \
                 ft_isdigit.c \
                 ft_isalnum.c \
                 ft_isascii.c \
@@ -28,8 +46,7 @@ PART1 = ft_isalpha.c \
                 ft_atoi.c \
                 ft_calloc.c \
                 ft_strdup.c \
-
-PART2 = ft_substr.c \
+				ft_substr.c \
                 ft_strjoin.c \
                 ft_strtrim.c \
                 ft_split.c \
@@ -40,8 +57,7 @@ PART2 = ft_substr.c \
                 ft_putstr_fd.c \
                 ft_putendl_fd.c \
                 ft_putnbr_fd.c \
-
-BONUS = ft_lstnew_bonus.c \
+				ft_lstnew_bonus.c \
                 ft_lstadd_front_bonus.c \
                 ft_lstsize_bonus.c \
                 ft_lstlast_bonus.c \
@@ -52,29 +68,53 @@ BONUS = ft_lstnew_bonus.c \
                 ft_lstmap_bonus.c
 
 
-SRC = $(PART1) $(PART2)
+GNL = get_next_line.c
 
-OBJS := $(SRC:%.c=%.o)
+PRINT_F = ft_print_char.c \
+				ft_print_hex.c \
+				ft_print_number.c \
+				ft_print_pointer.c \
+				ft_print_string.c \
+				ft_print_unsigned_decimal.c \
+				ft_printf.c \
+				ft_putchar.c \
+				ft_puthex.c \
+				ft_putnbr.c \
+				ft_putunsigned.c \
+				ft_strlen.c
 
-BONUS_OBJS := $(BONUS:%.c=%.o)
+CORE_SRCS = $(addprefix $(SRC_DIR)/core/, $(CORE))
+GNL_SRCS = $(addprefix $(SRC_DIR)/gnl/, $(GNL))
+PRINT_F_SRCS = $(addprefix $(SRC_DIR)/printf/, $(PRINT_F))
+
+CORE_OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(CORE_SRCS))
+GNL_OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(GNL_SRCS))
+PRINT_F_OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(PRINT_F_SRCS))
+
+OBJECTS = $(CORE_OBJS) $(GNL_OBJS) $(PRINT_F_OBJS)
+DEPS = $(OBJECTS:.o=.d)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+$(NAME): $(OBJECTS)
+	$(AR) $@ $^
+	$(info CREATED $(NAME))
 
-bonus:
-	@$(MAKE) --no-print-directory OBJS="$(OBJS) $(BONUS_OBJS)"
+-include $(DEPS)
 
-%.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CCFLAGS) $(DEPFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJ_DIR)
+	$(info ALL objects deleted)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
+	$(info full clean completed)
 
 re: fclean all
+	$(info project rebuild)
 
 .PHONY: all clean fclean re
